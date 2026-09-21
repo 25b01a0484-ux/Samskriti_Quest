@@ -1,0 +1,1838 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samskriti Quest — Heritage Game Platform</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #080d2b;
+  color: white;
+  min-height: 100vh;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border: none;
+}
+
+.app {
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+/* HEADER */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: rgba(8,13,43,.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(120,120,255,.2);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg,#7c3aed,#ec4899);
+  font-weight: 900;
+}
+
+.logo small {
+  display: block;
+  color: #aeb5d9;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+.logo strong {
+  font-size: 15px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: #171c43;
+  color: white;
+}
+
+/* MAIN */
+
+main {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px 16px;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+.hero {
+  padding: 22px;
+  border-radius: 24px;
+  background: linear-gradient(135deg,#151d58,#54239a,#9d277d);
+  box-shadow: 0 15px 45px rgba(0,0,0,.3);
+  margin-bottom: 18px;
+}
+
+.hero h1 {
+  font-size: clamp(25px,7vw,42px);
+  margin-bottom: 8px;
+}
+
+.hero p {
+  color: #dddffc;
+}
+
+/* CARDS */
+
+.card {
+  background: linear-gradient(145deg,#11183c,#171d48);
+  border: 1px solid rgba(130,130,255,.2);
+  border-radius: 20px;
+  padding: 18px;
+  margin-bottom: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.18);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 12px;
+}
+
+@media(max-width:600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.game-card {
+  min-height: 170px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.game-icon {
+  font-size: 42px;
+}
+
+.game-card h3 {
+  margin-top: 8px;
+}
+
+.game-card p {
+  color: #aeb5d9;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+.gradient-purple {
+  background: linear-gradient(145deg,#1d1550,#6c2fa4);
+}
+
+.gradient-orange {
+  background: linear-gradient(145deg,#442019,#a94c23);
+}
+
+.gradient-blue {
+  background: linear-gradient(145deg,#10284d,#176ba1);
+}
+
+.gradient-green {
+  background: linear-gradient(145deg,#103d36,#16735b);
+}
+
+.gradient-pink {
+  background: linear-gradient(145deg,#42133e,#a52678);
+}
+
+.gradient-gold {
+  background: linear-gradient(145deg,#453515,#916c21);
+}
+
+/* BUTTONS */
+
+.primary {
+  padding: 13px 18px;
+  border-radius: 14px;
+  color: white;
+  font-weight: 700;
+  background: linear-gradient(135deg,#7c3aed,#ec4899);
+}
+
+.secondary {
+  padding: 12px 16px;
+  border-radius: 14px;
+  color: white;
+  background: #242951;
+}
+
+.full {
+  width: 100%;
+}
+
+/* XP */
+
+.xp-track {
+  height: 10px;
+  background: #292e55;
+  border-radius: 99px;
+  overflow: hidden;
+  margin-top: 9px;
+}
+
+.xp-fill {
+  height: 100%;
+  background: linear-gradient(90deg,#8b5cf6,#ec4899,#f59e0b);
+  border-radius: inherit;
+}
+
+/* STATS */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 8px;
+}
+
+@media(max-width:600px) {
+  .stats {
+    grid-template-columns: repeat(2,1fr);
+  }
+}
+
+.stat {
+  text-align: center;
+  padding: 14px 5px;
+  border-radius: 16px;
+  background: #141a40;
+}
+
+.stat strong {
+  display: block;
+  font-size: 18px;
+}
+
+.stat small {
+  color: #9299bd;
+}
+
+/* NAV */
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: 70px;
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
+  background: rgba(10,14,43,.97);
+  backdrop-filter: blur(15px);
+  border-top: 1px solid rgba(130,130,255,.2);
+}
+
+.nav-btn {
+  background: transparent;
+  color: #777fa9;
+  font-size: 11px;
+}
+
+.nav-btn span {
+  display: block;
+  font-size: 21px;
+  margin-bottom: 3px;
+}
+
+.nav-btn.active {
+  color: #ec72e4;
+}
+
+/* QUIZ */
+
+.quiz-option {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  margin: 10px 0;
+  border-radius: 15px;
+  background: #1a204b;
+  color: white;
+  text-align: left;
+  border: 1px solid #303761;
+}
+
+.quiz-option:hover {
+  border-color: #a855f7;
+}
+
+.correct {
+  background: #13543e !important;
+  border-color: #28d89b !important;
+}
+
+.wrong {
+  background: #5a2634 !important;
+  border-color: #ef617c !important;
+}
+
+/* PROFILE */
+
+.profile-header {
+  text-align: center;
+  padding: 28px 18px;
+  border-radius: 25px;
+  background: linear-gradient(135deg,#192b74,#672da0,#a72d79);
+}
+
+.avatar-wrapper {
+  width: 110px;
+  height: 110px;
+  margin: auto;
+  padding: 5px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#ffd45b,#f59e0b,#ec4899);
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #252b55;
+}
+
+.frame-gold {
+  padding: 5px;
+  background: linear-gradient(135deg,#ffe78a,#c78b18,#fff1a8);
+}
+
+input {
+  width: 100%;
+  padding: 13px;
+  border-radius: 12px;
+  border: 1px solid #383e69;
+  background: #101638;
+  color: white;
+  margin: 7px 0;
+}
+
+/* MUSEUM */
+
+.artifact-image {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+  border-radius: 18px;
+  background: linear-gradient(135deg,#25244e,#815c2d);
+  display: grid;
+  place-items: center;
+  font-size: 75px;
+}
+
+/* BOARD */
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(10,1fr);
+  aspect-ratio: 1;
+  width: 100%;
+  max-width: 650px;
+  margin: 15px auto;
+  position: relative;
+  overflow: hidden;
+  border: 5px solid #d5a840;
+  border-radius: 12px;
+}
+
+.square {
+  display: grid;
+  place-items: center;
+  font-size: clamp(8px,2.5vw,15px);
+  font-weight: 700;
+  border: 1px solid rgba(255,255,255,.12);
+  background: #253a6a;
+}
+
+.square:nth-child(even) {
+  background: #492c65;
+}
+
+.token {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #ffd447;
+  border: 3px solid white;
+  z-index: 10;
+  transition: all .35s ease;
+}
+
+.ladder {
+  position: absolute;
+  height: 7px;
+  background: #e8c15c;
+  transform-origin: left center;
+  z-index: 4;
+  box-shadow: 0 0 8px #e8c15c;
+}
+
+.snake {
+  position: absolute;
+  height: 9px;
+  background: #e55b62;
+  border-radius: 20px;
+  transform-origin: left center;
+  z-index: 4;
+}
+
+/* SHOP */
+
+.shop-item {
+  text-align: center;
+}
+
+.shop-preview {
+  height: 110px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  font-size: 55px;
+  background: linear-gradient(135deg,#22275a,#522d78);
+  margin-bottom: 10px;
+}
+
+/* TOY */
+
+.toy-preview {
+  width: 180px;
+  height: 180px;
+  margin: 20px auto;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 80px;
+  background: #c87936;
+  border: 10px solid #f1bd57;
+  box-shadow: 0 0 35px rgba(241,189,87,.3);
+}
+
+.colors {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.color {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+}
+
+.color.selected {
+  border-color: white;
+  transform: scale(1.12);
+}
+
+/* MODAL */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: none;
+  place-items: center;
+  padding: 20px;
+  background: rgba(0,0,0,.7);
+}
+
+.modal.show {
+  display: grid;
+}
+
+.modal-box {
+  width: min(430px,100%);
+  padding: 25px;
+  border-radius: 24px;
+  background: #12183d;
+  text-align: center;
+  animation: pop .25s ease;
+}
+
+@keyframes pop {
+  from {
+    transform: scale(.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.badge {
+  display: inline-block;
+  padding: 7px 12px;
+  border-radius: 20px;
+  background: #80541c;
+  color: #ffe18a;
+  font-size: 12px;
+  margin: 5px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header class="header">
+  <div class="logo">
+    <div class="logo-icon">SQ</div>
+    <div>
+      <strong>Samskriti Quest</strong>
+      <small>HERITAGE GAME PLATFORM</small>
+    </div>
+  </div>
+
+  <div class="header-actions">
+    <button class="icon-btn" onclick="go('shop')">🛍️</button>
+    <button class="icon-btn" onclick="toggleSound()">🔊</button>
+  </div>
+</header>
+
+<main>
+
+<!-- HOME -->
+
+<section id="home" class="page active">
+
+<div class="hero">
+  <p>Welcome back, Arjun! 👋</p>
+  <h1>Continue Your Heritage Journey</h1>
+  <p>Explore India's history through games, discoveries and stories.</p>
+
+  <div style="margin-top:18px">
+    <strong>Lvl <span id="homeLevel">8</span></strong>
+    <span style="float:right" id="homeXP">3265 / 4050 XP</span>
+    <div class="xp-track">
+      <div id="homeXPBar" class="xp-fill" style="width:80%"></div>
+    </div>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat"><strong id="coinDisplay">245</strong><small>🪙 COINS</small></div>
+  <div class="stat"><strong>🔥 5</strong><small>STREAK</small></div>
+  <div class="stat"><strong id="artifactStat">2</strong><small>ARTIFACTS</small></div>
+  <div class="stat"><strong id="gameStat">6</strong><small>GAMES</small></div>
+</div>
+
+<div style="height:15px"></div>
+
+<div class="card">
+  <h2>🎯 Daily Quest</h2>
+  <p style="color:#aeb5d9;margin:8px 0">Complete 3 heritage games</p>
+  <strong>2 / 3</strong>
+  <div class="xp-track">
+    <div class="xp-fill" style="width:66%"></div>
+  </div>
+</div>
+
+<div class="grid">
+  <button class="primary" onclick="go('games')">🎮 Play</button>
+  <button class="secondary" onclick="go('museum')">🏛️ Explore Museum</button>
+</div>
+
+</section>
+
+
+<!-- GAMES -->
+
+<section id="games" class="page">
+
+<div class="hero">
+  <h1>Heritage Games Hub</h1>
+  <p>Play ancient strategy, architecture, culture & craft games to earn XP and coins!</p>
+</div>
+
+<div class="grid">
+
+<div class="card game-card gradient-orange">
+  <div class="game-icon">🏛️</div>
+  <div>
+    <h3>Harappan Architecture</h3>
+    <p>5×5 Grid Builder</p>
+    <strong>+100 XP</strong>
+  </div>
+  <button class="primary" onclick="startGame('harappan')">Play</button>
+</div>
+
+<div class="card game-card gradient-green">
+  <div class="game-icon">🐍</div>
+  <div>
+    <h3>Moksha Patam</h3>
+    <p>100 Square Heritage Board</p>
+    <strong>+80 XP</strong>
+  </div>
+  <button class="primary" onclick="startGame('moksha')">Play</button>
+</div>
+
+<div class="card game-card gradient-orange">
+  <div class="game-icon">🐎</div>
+  <div>
+    <h3>Toy Artisan Studio</h3>
+    <p>Traditional Indian Woodcraft</p>
+    <strong>+100 XP</strong>
+  </div>
+  <button class="primary" onclick="startGame('toy')">Play</button>
+</div>
+
+<div class="card game-card gradient-blue">
+  <div class="game-icon">🧮</div>
+  <div>
+    <h3>Vedic Math Fast Duel</h3>
+    <p>45s Mental Arithmetic Rush</p>
+    <strong>+90 XP</strong>
+  </div>
+  <button class="primary" onclick="startGame('math')">Play</button>
+</div>
+
+<div class="card game-card gradient-pink">
+  <div class="game-icon">🪔</div>
+  <div>
+    <h3>Festival & Architecture Quiz</h3>
+    <p>Discover India's traditions</p>
+    <strong>+100 XP</strong>
+  </div>
+  <button class="primary" onclick="startGame('quiz')">Play</button>
+</div>
+
+<div class="card game-card gradient-gold">
+  <div class="game-icon">🗺️</div>
+  <div>
+    <h3>State History & Culture Quest</h3>
+    <p>Explore India's states</p>
+    <strong>+100 XP</strong>
+  </div>
+  <button class="primary" onclick="startGame('state')">Play</button>
+</div>
+
+</div>
+</section>
+
+
+<!-- QUIZ -->
+
+<section id="quiz" class="page">
+
+<div class="hero">
+  <h1>🪔 Festival & Architecture Quiz</h1>
+  <p>PLAY → ANSWER → DISCOVER → LEARN → EARN</p>
+</div>
+
+<div class="card">
+  <div style="display:flex;justify-content:space-between">
+    <strong id="questionNumber">Question 1/10</strong>
+    <strong>⭐ <span id="quizScore">0</span></strong>
+  </div>
+
+  <div class="xp-track">
+    <div id="quizProgress" class="xp-fill" style="width:10%"></div>
+  </div>
+
+  <h2 id="question" style="margin:22px 0"></h2>
+
+  <div id="options"></div>
+
+  <div id="explanation" style="display:none;margin-top:15px;padding:15px;border-radius:15px;background:#202651"></div>
+
+  <button id="nextQuestion" class="primary full" style="display:none;margin-top:15px" onclick="nextQuizQuestion()">Continue →</button>
+</div>
+
+</section>
+
+
+<!-- STATE GAME -->
+
+<section id="state" class="page">
+
+<div class="hero">
+  <h1>🗺️ State History & Culture Quest</h1>
+  <p>Choose a state and discover its heritage.</p>
+</div>
+
+<div id="stateSelection" class="grid">
+
+<button class="card" onclick="selectState('Andhra Pradesh')">🇮🇳<h3>Andhra Pradesh</h3></button>
+<button class="card" onclick="selectState('Telangana')">🏛️<h3>Telangana</h3></button>
+<button class="card" onclick="selectState('Tamil Nadu')">🛕<h3>Tamil Nadu</h3></button>
+<button class="card" onclick="selectState('Karnataka')">🎭<h3>Karnataka</h3></button>
+<button class="card" onclick="selectState('Rajasthan')">🏰<h3>Rajasthan</h3></button>
+<button class="card" onclick="selectState('Maharashtra')">🎨<h3>Maharashtra</h3></button>
+
+</div>
+
+<div id="stateHub" style="display:none"></div>
+
+</section>
+
+
+<!-- MOKSHA -->
+
+<section id="moksha" class="page">
+
+<div class="hero">
+  <h1>🐍 Moksha Patam</h1>
+  <p>An ancient Indian board-game tradition of virtues, progress and consequences.</p>
+</div>
+
+<div class="card">
+  <div style="display:flex;justify-content:space-between">
+    <strong>Player: Arjun</strong>
+    <strong>🎲 Dice: <span id="dice">-</span></strong>
+  </div>
+
+  <div id="board" class="board"></div>
+
+  <button class="primary full" onclick="rollDice()">🎲 Roll Dice</button>
+
+  <p id="boardMessage" style="text-align:center;margin-top:12px;color:#ffd76c"></p>
+</div>
+
+</section>
+
+
+<!-- TOY -->
+
+<section id="toy" class="page">
+
+<div class="hero">
+  <h1>🐎 Toy Artisan Studio</h1>
+  <p>GI Heritage Woodcraft & Natural Dyes</p>
+</div>
+
+<div class="card">
+  <h3>Choose your toy</h3>
+
+  <button class="secondary" onclick="toyType='horse';updateToy()">Kondapalli Horse — Andhra Pradesh</button>
+  <button class="secondary" onclick="toyType='doll';updateToy()">Channapatna Doll — Karnataka</button>
+
+  <div id="toyPreview" class="toy-preview">🐎</div>
+
+  <input id="toyName" placeholder="Name Your Toy">
+
+  <h3 style="margin-top:15px">1. Base Organic Dye</h3>
+
+  <div class="colors">
+    <button class="color selected" style="background:#c87936" onclick="changeToyColor('#c87936',this)"></button>
+    <button class="color" style="background:#e84c65" onclick="changeToyColor('#e84c65',this)"></button>
+    <button class="color" style="background:#2878d1" onclick="changeToyColor('#2878d1',this)"></button>
+    <button class="color" style="background:#27a66f" onclick="changeToyColor('#27a66f',this)"></button>
+    <button class="color" style="background:#f2c94c" onclick="changeToyColor('#f2c94c',this)"></button>
+  </div>
+
+  <button class="primary full" style="margin-top:18px" onclick="createToy()">Create Toy +100 XP</button>
+</div>
+
+</section>
+
+
+<!-- MUSEUM -->
+
+<section id="museum" class="page">
+
+<div class="hero">
+  <h1>🏛️ Virtual Museum</h1>
+  <p>Explore India's incredible heritage.</p>
+</div>
+
+<div class="card">
+  <div class="artifact-image">☀️</div>
+  <h2 style="margin-top:12px">Konark Sun Temple Wheel</h2>
+  <p style="color:#aeb5d9">c. 1250 CE · Konark, Odisha</p>
+  <button class="primary full" style="margin-top:15px" onclick="discover('Konark Sun Temple Wheel')">Inspect Artifact</button>
+</div>
+
+<div class="card">
+  <div class="artifact-image">🗿</div>
+  <h2 style="margin-top:12px">Dancing Girl — Mohenjo-daro</h2>
+  <p style="color:#aeb5d9">c. 2500 BCE · Indus Valley Civilization</p>
+  <button class="primary full" style="margin-top:15px" onclick="discover('Dancing Girl')">Inspect Artifact</button>
+</div>
+
+<div class="card">
+  <div class="artifact-image">🪷</div>
+  <h2 style="margin-top:12px">Bodhisattva Padmapani</h2>
+  <p style="color:#aeb5d9">c. 450–500 CE · Ajanta Caves</p>
+  <button class="primary full" style="margin-top:15px" onclick="discover('Bodhisattva Padmapani')">Inspect Artifact</button>
+</div>
+
+</section>
+
+
+<!-- LEADERBOARD -->
+
+<section id="leaderboard" class="page">
+
+<div class="hero">
+  <h1>🏆 Leaderboard</h1>
+  <p>Heritage learners around the school.</p>
+</div>
+
+<div id="leaderboardList"></div>
+
+</section>
+
+
+<!-- PROFILE -->
+
+<section id="profile" class="page">
+
+<div class="profile-header">
+
+<div id="avatarWrapper" class="avatar-wrapper">
+  <img id="profileAvatar" class="avatar" src="" alt="Profile picture">
+</div>
+
+<h1 id="profileName" style="margin-top:12px">Arjun</h1>
+<p id="profileTitle">Junior Heritage Archaeologist</p>
+
+<p style="margin-top:10px">🔥 5d Streak · Lvl 8</p>
+
+<div style="margin-top:15px">
+  <strong>3265 / 4050 XP</strong>
+  <div class="xp-track">
+    <div class="xp-fill" style="width:80%"></div>
+  </div>
+</div>
+
+</div>
+
+<div class="card" style="margin-top:15px">
+
+<h3>Edit Profile</h3>
+
+<input id="nameInput" placeholder="Name">
+
+<input id="titleInput" placeholder="Profile title">
+
+<input id="avatarInput" type="file" accept="image/*">
+
+<button class="primary full" onclick="saveProfile()">Save Profile</button>
+
+</div>
+
+<div class="stats">
+<div class="stat"><strong>2 / 50</strong><small>ARTIFACTS</small></div>
+<div class="stat"><strong>2 / 8</strong><small>WORLDS</small></div>
+<div class="stat"><strong>1 / 40</strong><small>SITES</small></div>
+<div class="stat"><strong>6</strong><small>GAMES</small></div>
+</div>
+
+<div class="card" style="margin-top:15px">
+<h2>🏅 Badges</h2>
+<span class="badge">Master Artisan</span>
+<span class="badge">Heritage Explorer</span>
+<span class="badge">Math Prodigy</span>
+<span class="badge">Festival Scholar</span>
+</div>
+
+<div class="card">
+<h2>🐎 Toy Gallery</h2>
+<p style="color:#aeb5d9;margin-top:7px">Your handcrafted heritage toys will appear here.</p>
+</div>
+
+</section>
+
+
+<!-- SHOP -->
+
+<section id="shop" class="page">
+
+<div class="hero">
+  <h1>🛍️ Heritage Shop</h1>
+  <p>Customize your explorer profile.</p>
+  <strong>🪙 <span id="shopCoins">245</span> coins</strong>
+</div>
+
+<div class="grid">
+
+<div class="card shop-item">
+  <div class="shop-preview">👑</div>
+  <h3>Royal Avatar Frame</h3>
+  <p>Gold heritage frame</p>
+  <strong>100 🪙</strong>
+  <button class="primary full" style="margin-top:10px" onclick="buyFrame()">Equip Frame</button>
+</div>
+
+<div class="card shop-item">
+  <div class="shop-preview">🌺</div>
+  <h3>Floral Profile Theme</h3>
+  <p>Heritage floral design</p>
+  <strong>80 🪙</strong>
+  <button class="secondary full" style="margin-top:10px">Purchase</button>
+</div>
+
+<div class="card shop-item">
+  <div class="shop-preview">✨</div>
+  <h3>Golden Game Effect</h3>
+  <p>Achievement effect</p>
+  <strong>60 🪙</strong>
+  <button class="secondary full" style="margin-top:10px">Purchase</button>
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+
+<!-- BOTTOM NAV -->
+
+<nav class="bottom-nav">
+
+<button class="nav-btn active" data-page="home" onclick="go('home')">
+<span>🏠</span>Home
+</button>
+
+<button class="nav-btn" data-page="games" onclick="go('games')">
+<span>🎮</span>Games
+</button>
+
+<button class="nav-btn" data-page="museum" onclick="go('museum')">
+<span>🏛️</span>Museum
+</button>
+
+<button class="nav-btn" data-page="leaderboard" onclick="go('leaderboard')">
+<span>🏆</span>Leaderboard
+</button>
+
+<button class="nav-btn" data-page="profile" onclick="go('profile')">
+<span>👤</span>Profile
+</button>
+
+</nav>
+
+
+<!-- REWARD MODAL -->
+
+<div id="rewardModal" class="modal">
+
+<div class="modal-box">
+
+<div style="font-size:65px">🏆</div>
+
+<h2 id="rewardTitle">New Achievement!</h2>
+
+<p id="rewardText" style="margin:12px 0;color:#b9bfdf"></p>
+
+<button class="primary full" onclick="closeReward()">Continue</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* ================================
+   GLOBAL PLAYER STATE
+================================ */
+
+let player = JSON.parse(localStorage.getItem("samskritiPlayer")) || {
+  name: "Arjun",
+  title: "Junior Heritage Archaeologist",
+  avatar: "",
+  level: 8,
+  xp: 3265,
+  coins: 245,
+  streak: 5,
+  artifacts: 2,
+  games: 6,
+  badges: ["Master Artisan","Heritage Explorer","Math Prodigy"]
+};
+
+function savePlayer() {
+  localStorage.setItem("samskritiPlayer", JSON.stringify(player));
+  updateUI();
+}
+
+function updateUI() {
+
+  document.getElementById("homeXP").textContent =
+    `${player.xp} / 4050 XP`;
+
+  document.getElementById("coinDisplay").textContent =
+    player.coins;
+
+  document.getElementById("shopCoins").textContent =
+    player.coins;
+
+  document.getElementById("artifactStat").textContent =
+    player.artifacts;
+
+  document.getElementById("gameStat").textContent =
+    player.games;
+
+  document.getElementById("profileName").textContent =
+    player.name;
+
+  document.getElementById("profileTitle").textContent =
+    player.title;
+
+  document.getElementById("nameInput").value =
+    player.name;
+
+  document.getElementById("titleInput").value =
+    player.title;
+
+  const avatar = document.getElementById("profileAvatar");
+
+  if(player.avatar) {
+    avatar.src = player.avatar;
+  } else {
+    avatar.src =
+      "data:image/svg+xml;charset=UTF-8," +
+      encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+        <rect width="200" height="200" rx="100" fill="#292f63"/>
+        <text x="100" y="125" text-anchor="middle"
+        font-size="85">🧑‍🎓</text>
+      </svg>`);
+  }
+
+  if(player.frame) {
+    document.getElementById("avatarWrapper")
+      .classList.add("frame-gold");
+  }
+}
+
+function reward(xp, coins, message) {
+
+  player.xp += xp;
+  player.coins += coins;
+
+  savePlayer();
+
+  document.getElementById("rewardText").textContent =
+    `${message} +${xp} XP · +${coins} Coins`;
+
+  document.getElementById("rewardModal")
+    .classList.add("show");
+}
+
+function closeReward() {
+  document.getElementById("rewardModal")
+    .classList.remove("show");
+}
+
+
+/* ================================
+   NAVIGATION
+================================ */
+
+function go(page) {
+
+  document.querySelectorAll(".page")
+    .forEach(p => p.classList.remove("active"));
+
+  const target = document.getElementById(page);
+
+  if(target) target.classList.add("active");
+
+  document.querySelectorAll(".nav-btn")
+    .forEach(btn => {
+      btn.classList.toggle(
+        "active",
+        btn.dataset.page === page
+      );
+    });
+
+  window.scrollTo(0,0);
+}
+
+
+/* ================================
+   GAME ROUTER
+================================ */
+
+function startGame(game) {
+
+  if(game === "quiz") {
+    startQuiz();
+    go("quiz");
+  }
+
+  if(game === "state") {
+    go("state");
+  }
+
+  if(game === "moksha") {
+    createBoard();
+    go("moksha");
+  }
+
+  if(game === "toy") {
+    go("toy");
+  }
+
+  if(game === "math") {
+    reward(5,2,"Vedic Math practice started!");
+  }
+
+  if(game === "harappan") {
+    reward(5,2,"Harappan Architecture practice started!");
+  }
+}
+
+
+/* ================================
+   FESTIVAL + ARCHITECTURE QUIZ
+================================ */
+
+const questions = [
+
+{
+ question:"Why are diyas traditionally used during Diwali?",
+ options:[
+  ["a","They symbolize light and the victory of good over darkness."],
+  ["b","They are used only for decoration."],
+  ["c","They are used to measure time."],
+  ["d","They are used as musical instruments."]
+ ],
+ correct:"a",
+ explanation:"Diyas traditionally symbolize light, hope and the victory of good over darkness.",
+ category:"festival"
+},
+
+{
+ question:"Why were stepwells constructed?",
+ options:[
+  ["a","To store and access groundwater."],
+  ["b","To hold temple bells."],
+  ["c","To train soldiers."],
+  ["d","To store grains only."]
+ ],
+ correct:"a",
+ explanation:"Stepwells provided access to stored groundwater, especially useful when water availability changed with the seasons.",
+ category:"architecture"
+},
+
+{
+ question:"What is traditionally celebrated during Pongal?",
+ options:[
+  ["a","The harvest and gratitude for nature."],
+  ["b","The beginning of winter sports."],
+  ["c","The construction of forts."],
+  ["d","The opening of schools."]
+ ],
+ correct:"a",
+ explanation:"Pongal is a harvest festival in which people express gratitude for nature, farmers and the harvest.",
+ category:"festival"
+},
+
+{
+ question:"Why does Hawa Mahal have many small windows?",
+ options:[
+  ["a","To improve airflow and allow people to observe the street."],
+  ["b","To store water."],
+  ["c","To strengthen the foundation."],
+  ["d","To make musical sounds."]
+ ],
+ correct:"a",
+ explanation:"Its many windows helped with ventilation and allowed people inside to observe activity outside.",
+ category:"architecture"
+},
+
+{
+ question:"Why is Holi associated with colours?",
+ options:[
+  ["a","Colours are part of joyful social and seasonal traditions."],
+  ["b","Colours were used to build temples."],
+  ["c","Colours represent different coins."],
+  ["d","Colours were used for measuring rainfall."]
+ ],
+ correct:"a",
+ explanation:"Holi is celebrated with colours as part of joyful social traditions and the arrival of spring.",
+ category:"festival"
+},
+
+{
+ question:"What was an important feature of Harappan cities?",
+ options:[
+  ["a","Planned drainage systems."],
+  ["b","Large modern airports."],
+  ["c","Railway stations."],
+  ["d","Skyscrapers."]
+ ],
+ correct:"a",
+ explanation:"Harappan cities were known for planned streets and sophisticated drainage systems.",
+ category:"architecture"
+},
+
+{
+ question:"What is the cultural significance of Onam?",
+ options:[
+  ["a","It celebrates Kerala's cultural traditions and the harvest season."],
+  ["b","It marks the building of a fort."],
+  ["c","It is a winter sports festival."],
+  ["d","It celebrates the invention of writing."]
+ ],
+ correct:"a",
+ explanation:"Onam is an important Kerala festival connected with cultural traditions, community celebrations and the harvest season.",
+ category:"festival"
+},
+
+{
+ question:"Why were courtyards commonly used in traditional Indian houses?",
+ options:[
+  ["a","They helped bring light and airflow into the home."],
+  ["b","They were used only for storing weapons."],
+  ["c","They were used to make roads."],
+  ["d","They were designed as underground tunnels."]
+ ],
+ correct:"a",
+ explanation:"Courtyards could improve natural light, airflow and social space within homes.",
+ category:"architecture"
+}
+
+];
+
+let quizQuestions=[];
+let quizIndex=0;
+let quizScore=0;
+
+function shuffle(array) {
+  return [...array].sort(() => Math.random()-.5);
+}
+
+function startQuiz() {
+
+  quizQuestions = shuffle(questions)
+    .map(q => ({
+      ...q,
+      options: shuffle(q.options)
+    }));
+
+  quizIndex=0;
+  quizScore=0;
+
+  showQuizQuestion();
+}
+
+function showQuizQuestion() {
+
+  const q = quizQuestions[quizIndex];
+
+  document.getElementById("questionNumber").textContent =
+    `Question ${quizIndex+1}/${quizQuestions.length}`;
+
+  document.getElementById("question").textContent =
+    q.question;
+
+  document.getElementById("quizScore").textContent =
+    quizScore;
+
+  document.getElementById("quizProgress").style.width =
+    `${((quizIndex+1)/quizQuestions.length)*100}%`;
+
+  const container =
+    document.getElementById("options");
+
+  container.innerHTML="";
+
+  document.getElementById("explanation").style.display="none";
+  document.getElementById("nextQuestion").style.display="none";
+
+  q.options.forEach(option => {
+
+    const btn=document.createElement("button");
+
+    btn.className="quiz-option";
+    btn.textContent=option[1];
+
+    btn.onclick=()=>answerQuiz(btn,option[0]);
+
+    container.appendChild(btn);
+
+  });
+}
+
+function answerQuiz(button,id) {
+
+  const q=quizQuestions[quizIndex];
+
+  document.querySelectorAll(".quiz-option")
+    .forEach(b=>b.disabled=true);
+
+  if(id===q.correct) {
+
+    button.classList.add("correct");
+
+    quizScore++;
+
+    player.xp += 10;
+    player.coins += 4;
+
+    savePlayer();
+
+  } else {
+
+    button.classList.add("wrong");
+
+    document.querySelectorAll(".quiz-option")
+      .forEach((b,index)=>{
+        if(q.options[index][0]===q.correct)
+          b.classList.add("correct");
+      });
+  }
+
+  document.getElementById("explanation").style.display="block";
+
+  document.getElementById("explanation").innerHTML =
+    `<strong>💡 Discover</strong><br>${q.explanation}`;
+
+  document.getElementById("nextQuestion").style.display="block";
+}
+
+function nextQuizQuestion() {
+
+  quizIndex++;
+
+  if(quizIndex>=quizQuestions.length) {
+
+    reward(
+      100,
+      40,
+      "Heritage Quiz Complete! You explored festivals and architecture."
+    );
+
+    if(!player.badges.includes("Festival Scholar")) {
+      player.badges.push("Festival Scholar");
+      savePlayer();
+    }
+
+    go("games");
+
+    return;
+  }
+
+  showQuizQuestion();
+}
+
+
+/* ================================
+   STATE QUEST
+================================ */
+
+const stateInfo = {
+
+"Andhra Pradesh": {
+ icon:"🏺",
+ highlights:"Kondapalli toys, Kuchipudi, Kalamkari, Amaravati and Lepakshi heritage."
+},
+
+"Telangana": {
+ icon:"🏛️",
+ highlights:"Ramappa Temple, Kakatiya heritage, Bathukamma and Cheriyal art."
+},
+
+"Tamil Nadu": {
+ icon:"🛕",
+ highlights:"Chola architecture, Brihadeeswara Temple, Pongal and Bharatanatyam."
+},
+
+"Karnataka": {
+ icon:"🎭",
+ highlights:"Hampi, Channapatna toys, Yakshagana and Pattadakal heritage."
+},
+
+"Rajasthan": {
+ icon:"🏰",
+ highlights:"Forts, Rajput heritage, Ghoomar, crafts and traditional architecture."
+},
+
+"Maharashtra": {
+ icon:"🎨",
+ highlights:"Ajanta, Ellora, Warli art, Ganesh Chaturthi and Maratha heritage."
+}
+
+};
+
+function selectState(state) {
+
+  const info=stateInfo[state];
+
+  document.getElementById("stateSelection").style.display="none";
+
+  document.getElementById("stateHub").style.display="block";
+
+  document.getElementById("stateHub").innerHTML=`
+
+  <div class="card gradient-purple">
+    <div style="font-size:60px">${info.icon}</div>
+    <h1>${state}</h1>
+    <p style="margin-top:10px">${info.highlights}</p>
+  </div>
+
+  <div class="card">
+    <h2>🏛️ Heritage Hub</h2>
+    <p style="color:#aeb5d9;margin:10px 0">
+      Explore history, culture, architecture, festivals,
+      arts, crafts and important heritage of ${state}.
+    </p>
+
+    <button class="primary full"
+      onclick="completeStateQuest('${state}')">
+      Start State Quiz
+    </button>
+  </div>
+
+  <button class="secondary full"
+    onclick="location.reload()">
+    ← Choose Another State
+  </button>
+  `;
+}
+
+function completeStateQuest(state) {
+
+  reward(
+    100,
+    40,
+    `${state} Heritage Quest completed!`
+  );
+
+  player.games++;
+  savePlayer();
+
+}
+
+
+/* ================================
+   TOY ARTISAN
+================================ */
+
+let toyType="horse";
+let toyColor="#c87936";
+
+function updateToy() {
+
+  document.getElementById("toyPreview").textContent =
+    toyType==="horse" ? "🐎" : "🪆";
+}
+
+function changeToyColor(color,button) {
+
+  toyColor=color;
+
+  document.getElementById("toyPreview")
+    .style.background=color;
+
+  document.querySelectorAll(".color")
+    .forEach(c=>c.classList.remove("selected"));
+
+  button.classList.add("selected");
+}
+
+function createToy() {
+
+  const name =
+    document.getElementById("toyName").value.trim();
+
+  if(!name) {
+    document.getElementById("toyName")
+      .focus();
+    return;
+  }
+
+  reward(
+    100,
+    40,
+    `${name} was added to your Toy Gallery!`
+  );
+
+  if(!player.badges.includes("Master Artisan")) {
+    player.badges.push("Master Artisan");
+    savePlayer();
+  }
+}
+
+
+/* ================================
+   MUSEUM
+================================ */
+
+function discover(name) {
+
+  if(!player.discoveries)
+    player.discoveries=[];
+
+  if(player.discoveries.includes(name)) {
+
+    reward(0,0,"You already recorded this discovery.");
+
+    return;
+  }
+
+  player.discoveries.push(name);
+  player.artifacts++;
+
+  reward(
+    25,
+    5,
+    `${name} recorded in your Explorer Journal!`
+  );
+}
+
+
+/* ================================
+   PROFILE
+================================ */
+
+function saveProfile() {
+
+  player.name =
+    document.getElementById("nameInput").value ||
+    "Arjun";
+
+  player.title =
+    document.getElementById("titleInput").value ||
+    "Junior Heritage Archaeologist";
+
+  const file =
+    document.getElementById("avatarInput").files[0];
+
+  if(file) {
+
+    const reader=new FileReader();
+
+    reader.onload=function(e) {
+
+      player.avatar=e.target.result;
+
+      savePlayer();
+    };
+
+    reader.readAsDataURL(file);
+
+  } else {
+
+    savePlayer();
+  }
+
+}
+
+
+/* ================================
+   SHOP FRAME
+================================ */
+
+function buyFrame() {
+
+  if(player.coins < 100) {
+
+    reward(0,0,"You need more coins for this frame.");
+
+    return;
+  }
+
+  player.coins -= 100;
+  player.frame=true;
+
+  savePlayer();
+
+  reward(
+    0,
+    0,
+    "Royal Avatar Frame equipped around your profile photo!"
+  );
+}
+
+
+/* ================================
+   MOKSHA PATAM
+================================ */
+
+const ladders=[
+  [3,24],
+  [18,37],
+  [28,55],
+  [42,79],
+  [51,91]
+];
+
+const snakes=[
+  [99,70],
+  [92,65],
+  [74,44],
+  [62,31],
+  [48,16]
+];
+
+let playerPosition=1;
+
+function createBoard() {
+
+  const board=document.getElementById("board");
+
+  board.innerHTML="";
+
+  let numbers=[];
+
+  for(let row=9;row>=0;row--) {
+
+    let rowNumbers=[];
+
+    for(let col=1;col<=10;col++) {
+
+      rowNumbers.push(row*10+col);
+    }
+
+    if((9-row)%2===1)
+      rowNumbers.reverse();
+
+    numbers.push(...rowNumbers);
+  }
+
+  numbers.forEach(number=>{
+
+    const cell=document.createElement("div");
+
+    cell.className="square";
+    cell.textContent=number;
+
+    board.appendChild(cell);
+
+  });
+
+  /*
+   * Representative continuous ladder overlays.
+   * In a production SVG implementation these should
+   * use calculated cell coordinates.
+   */
+
+  setTimeout(()=>drawBoardObjects(),50);
+}
+
+function drawBoardObjects() {
+
+  const board=document.getElementById("board");
+
+  ladders.forEach(pair=>{
+
+    const ladder=document.createElement("div");
+
+    ladder.className="ladder";
+
+    const start=pair[0];
+
+    const length=Math.max(
+      55,
+      Math.abs(pair[1]-pair[0])*0.75
+    );
+
+    ladder.style.left=
+      ((start-1)%10)*10+5+"%";
+
+    ladder.style.top=
+      (9-Math.floor((start-1)/10))*10+5+"%";
+
+    ladder.style.width=length+"px";
+
+    ladder.style.transform=
+      "rotate(-55deg)";
+
+    board.appendChild(ladder);
+
+  });
+
+  snakes.forEach(pair=>{
+
+    const snake=document.createElement("div");
+
+    snake.className="snake";
+
+    const start=pair[0];
+
+    snake.style.left=
+      ((start-1)%10)*10+5+"%";
+
+    snake.style.top=
+      (9-Math.floor((start-1)/10))*10+5+"%";
+
+    snake.style.width="65px";
+
+    snake.style.transform=
+      "rotate(125deg)";
+
+    board.appendChild(snake);
+
+  });
+
+}
+
+function rollDice() {
+
+  const value=
+    Math.floor(Math.random()*6)+1;
+
+  document.getElementById("dice")
+    .textContent=value;
+
+  playerPosition+=value;
+
+  if(playerPosition>100)
+    playerPosition=100;
+
+  let message=
+    `You moved to square ${playerPosition}.`;
+
+  const ladder=
+    ladders.find(x=>x[0]===playerPosition);
+
+  const snake=
+    snakes.find(x=>x[0]===playerPosition);
+
+  if(ladder) {
+
+    playerPosition=ladder[1];
+
+    message=
+      "🪜 You climbed a ladder! +XP";
+
+    player.xp+=8;
+
+  }
+
+  if(snake) {
+
+    playerPosition=snake[1];
+
+    message=
+      "🐍 Watch out! The snake sent you back.";
+
+  }
+
+  savePlayer();
+
+  document.getElementById("boardMessage")
+    .textContent=message;
+}
+
+
+/* ================================
+   LEADERBOARD
+================================ */
+
+function renderLeaderboard() {
+
+  const students=[
+    ["Ananya Sharma",3820],
+    ["Rohan Iyer",3290],
+    [player.name,player.xp],
+    ["Priya Mukherjee",2310],
+    ["Kabir Verma",1980],
+    ["Meera Rao",1850]
+  ];
+
+  students.sort((a,b)=>b[1]-a[1]);
+
+  document.getElementById("leaderboardList").innerHTML =
+    students.map((s,i)=>`
+
+    <div class="card"
+      style="${s[0]===player.name?'border-color:#ec4899':''}">
+
+      <strong>#${i+1} ${s[0]}</strong>
+
+      <span style="float:right">
+        ${s[1]} XP
+      </span>
+
+      ${s[0]===player.name
+        ? '<div style="color:#ec72e4;margin-top:5px">YOU</div>'
+        : ''}
+    </div>
+
+  `).join("");
+}
+
+
+/* ================================
+   SOUND
+================================ */
+
+function toggleSound() {
+
+  const current=
+    localStorage.getItem("sqSound") !== "false";
+
+  localStorage.setItem(
+    "sqSound",
+    String(!current)
+  );
+}
+
+
+/* ================================
+   INITIALIZATION
+================================ */
+
+function init() {
+
+  updateUI();
+  renderLeaderboard();
+}
+
+init();
+
+</script>
+
+</div>
+
+</body>
+</html>
+```
